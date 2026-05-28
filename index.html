@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klel-Yuim PANEL</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0a0e1a;
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.panel{
+    background:#121826;
+    border-radius:24px;
+    padding:32px;
+    max-width:420px;
+    width:100%;
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+.header{
+    text-align:center;
+    margin-bottom:24px;
+}
+
+.header h1{
+    color:#fff;
+    font-size:28px;
+}
+
+.header small{
+    color:#777;
+}
+
+.divider{
+    color:#333;
+    margin-top:6px;
+}
+
+.step-progress{
+    display:flex;
+    gap:6px;
+    margin-bottom:25px;
+}
+
+.step{
+    flex:1;
+    text-align:center;
+    padding:10px;
+    border-radius:30px;
+    background:#1a1f2a;
+    color:#666;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.step.active{
+    background:linear-gradient(135deg,#00d4ff,#0099cc);
+    color:#fff;
+}
+
+.create-box h3{
+    text-align:center;
+    color:#fff;
+    margin-bottom:20px;
+}
+
+.info-row{
+    background:#0d1117;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:14px;
+}
+
+.label{
+    color:#888;
+    font-size:11px;
+}
+
+.value{
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.options{
+    display:flex;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.option{
+    flex:1;
+    background:#0d1117;
+    border-radius:12px;
+    padding:12px;
+    text-align:center;
+}
+
+.opt-label{
+    color:#888;
+    font-size:11px;
+}
+
+.opt-value{
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.free-badge{
+    background:#0d1117;
+    border:1px solid #252a36;
+    border-radius:12px;
+    padding:14px;
+    text-align:center;
+    margin-bottom:20px;
+    color:#00d4ff;
+    font-weight:bold;
+}
+
+.btn-generate{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:40px;
+    background:linear-gradient(135deg,#00d4ff,#0099cc);
+    color:#fff;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-generate:hover{
+    opacity:0.9;
+}
+
+.loading{
+    display:none;
+    text-align:center;
+    margin-top:15px;
+}
+
+.spinner{
+    width:25px;
+    height:25px;
+    border:3px solid #222;
+    border-top-color:#00d4ff;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin:auto;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.used-count{
+    text-align:center;
+    color:#666;
+    font-size:11px;
+    margin-top:16px;
+}
+
+.admin-section{
+    margin-top:24px;
+    border-top:1px solid #1a1f2a;
+    padding-top:20px;
+}
+
+.admin-section h4{
+    color:#888;
+    margin-bottom:10px;
+}
+
+.admin-input{
+    width:100%;
+    padding:12px;
+    border:none;
+    outline:none;
+    border-radius:40px;
+    background:#0d1117;
+    color:#fff;
+    margin-bottom:10px;
+}
+
+.admin-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:40px;
+    background:#1a1f2a;
+    color:#fff;
+    cursor:pointer;
+}
+
+.admin-btn:hover{
+    background:#00d4ff;
+}
+
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#00d4ff;
+    color:#fff;
+    padding:12px 20px;
+    border-radius:40px;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="panel">
+
+    <div class="header">
+        <h1>Klel-Yuim <small>PANEL</small></h1>
+        <div class="divider">---</div>
+    </div>
+
+    <div class="step-progress">
+        <div class="step active">LinkNgon 1</div>
+        <div class="step">LinkNgon 2</div>
+        <div class="step">Layma</div>
+    </div>
+
+    <div class="create-box">
+
+        <h3>Create License - Việt Nam</h3>
+
+        <div class="info-row">
+            <div class="label">Game</div>
+            <div class="value">Free Fire</div>
+        </div>
+
+        <div class="options">
+
+            <div class="option">
+                <div class="opt-label">Device</div>
+                <div class="opt-value">1</div>
+            </div>
+
+            <div class="option">
+                <div class="opt-label">Days</div>
+                <div class="opt-value">1</div>
+            </div>
+
+        </div>
+
+        <div class="free-badge">
+            ⚡ FREE - Vượt 3 Link ⚡
+        </div>
+
+        <button class="btn-generate" onclick="startGetKey()">
+            🚀 Generate Key
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color:#888;font-size:11px;margin-top:8px;">
+                Loading...
+            </p>
+        </div>
+
+        <div class="used-count">
+            📊 Today: 0/2 key
+        </div>
+
+    </div>
+
+    <div class="admin-section">
+
+        <h4>🔐 Admin Panel</h4>
+
+        <input 
+            type="password"
+            id="admin_code"
+            class="admin-input"
+            placeholder="Enter Admin Code"
+        >
+
+        <button 
+            type="button"
+            class="admin-btn"
+            onclick="checkAdmin()"
+        >
+            ⏩ Login Admin
+        </button>
+
+    </div>
+
+</div>
+
+<div class="toast" id="toast">
+    ✅ Success
+</div>
+
+<script>
+
+function startGetKey(){
+
+    const loading = document.getElementById("loading");
+
+    loading.style.display = "block";
+
+    setTimeout(() => {
+
+        loading.style.display = "none";
+
+        showToast("Key Generated 🔑");
+
+    },2000);
+}
+
+function checkAdmin(){
+
+    const code = document.getElementById("admin_code").value;
+
+    if(code === "YASIN123"){
+
+        showToast("Welcome Admin 🔓");
+
+        setTimeout(() => {
+
+            window.location.href = "admin.html";
+
+        },1000);
+
+    }else{
+
+        alert("Wrong Admin Code ❌");
+
+    }
+}
+
+function showToast(text){
+
+    const toast = document.getElementById("toast");
+
+    toast.innerHTML = text;
+
+    toast.style.display = "block";
+
+    setTimeout(() => {
+
+        toast.style.display = "none";
+
+    },2000);
+}
+
+</script>
+
+</body>
+</html>
